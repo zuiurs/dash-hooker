@@ -66,7 +66,7 @@ and search the OUI.
 |FC:65:DE|
 |FC:A6:67|
 
-(reference of https://mac.uic.jp/vendor/)
+(reference of https://mac.uic.jp)
 
 ## Systemd Setting
 
