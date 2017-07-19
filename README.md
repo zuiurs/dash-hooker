@@ -68,9 +68,25 @@ and search the OUI.
 
 (reference of https://mac.uic.jp/vendor/)
 
+## Systemd Setting
+
+Edit dash-hooker.service and replace `ExecStart` to your dash-hooker executalbe path.
+
+```
+vim dash-hooker.service
+```
+
+Install and Start.
+
+```
+sudo cp -i dash-hooker.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable dash-hooker.service
+sudo systemctl start dash-hooker.service
+```
+
 ## TODO
 
-- make systemd daemon file
 - make tool of searching dash button MAC
 
 ## License

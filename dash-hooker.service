@@ -1,0 +1,10 @@
+[Unit]
+Description = dash-hooker daemon
+
+[Service]
+ExecStart = <dash-hooker_binary_path>
+Restart = always
+Type = simple
+
+[Install]
+WantedBy = multi-user.target
