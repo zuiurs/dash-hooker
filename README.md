@@ -65,6 +65,7 @@ and search the OUI.
 |F0:D2:F1|
 |FC:65:DE|
 |FC:A6:67|
+
 (reference of https://mac.uic.jp/vendor/)
 
 ## TODO
