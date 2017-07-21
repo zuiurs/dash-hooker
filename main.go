@@ -2,6 +2,8 @@ package main
 
 import (
 	"bytes"
+	"flag"
+	"fmt"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
@@ -12,6 +14,8 @@ import (
 )
 
 var (
+	VerboseMode bool
+
 	snapshot_len     int32         = 64 // limit of length of packets captured
 	promiscuous      bool          = true
 	timeout          time.Duration = 30 * time.Second
@@ -19,6 +23,13 @@ var (
 )
 
 func main() {
+	flag.BoolVar(&VerboseMode, "v", false, "verbose output")
+	flag.Parse()
+
+	packetCapture()
+}
+
+func packetCapture() {
 	// Open device
 	handle, err := pcap.OpenLive(device, snapshot_len, promiscuous, timeout)
 	if err != nil {
@@ -33,7 +44,11 @@ func main() {
 		arpLayer := packet.Layer(layers.LayerTypeARP)
 		if arpLayer != nil {
 			arpPacket, _ := arpLayer.(*layers.ARP)
+
 			if bytes.Equal(arpPacket.SourceHwAddress, targetMACAddress) {
+				if VerboseMode {
+					fmt.Println(packet)
+				}
 				routine()
 			}
 		}
