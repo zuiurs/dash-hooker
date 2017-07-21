@@ -41,11 +41,10 @@ func packetCapture() {
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {
 		// Process packet
-		arpLayer := packet.Layer(layers.LayerTypeARP)
-		if arpLayer != nil {
-			arpPacket, _ := arpLayer.(*layers.ARP)
-
-			if bytes.Equal(arpPacket.SourceHwAddress, targetMACAddress) {
+		ethernetPacket, _ := packet.Layer(layers.LayerTypeEthernet).(*layers.Ethernet)
+		if bytes.Equal(ethernetPacket.SrcMAC, targetMACAddress) {
+			LLCLayer := packet.Layer(layers.LayerTypeLLC)
+			if LLCLayer != nil {
 				if VerboseMode {
 					fmt.Println(packet)
 				}
