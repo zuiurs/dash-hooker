@@ -8,6 +8,14 @@ Amazon Dash Button's arp request hooker.
 dash-hooker
 ```
 
+## Options
+
+```
+# dash-hooker --help
+Usage of dash-hooker:
+  -v    verbose output
+```
+
 ## Requirements
 
 [google/gopacket](https://github.com/google/gopacket) uses pcap.
@@ -15,6 +23,8 @@ dash-hooker
 ```
 yum install -y libpcap-devel
 ```
+
+This program requires **Root Permission**.
 
 ## Installation
 
