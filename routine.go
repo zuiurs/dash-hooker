@@ -16,7 +16,7 @@ func routine() {
 	type Payload struct {
 		Channel   string `json:"channel"`
 		Username  string `json:"username"`
-		IconEmoji string `json:"icon_emoji`
+		IconEmoji string `json:"icon_emoji"`
 		Text      string `json:"text"`
 	}
 

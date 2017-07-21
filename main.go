@@ -7,19 +7,19 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
-	"log"
-	"strconv"
-	"strings"
+	"net"
+	"os"
 	"time"
 )
 
 var (
 	VerboseMode bool
 
-	snapshot_len     int32         = 64 // limit of length of packets captured
-	promiscuous      bool          = true
-	timeout          time.Duration = 30 * time.Second
-	targetMACAddress []byte        = MACParser(mac)
+	snapshot_len int32         = 64 // limit of length of packets captured
+	promiscuous  bool          = true
+	timeout      time.Duration = 30 * time.Second
+
+	targetMACAddress net.HardwareAddr
 )
 
 func main() {
@@ -33,7 +33,8 @@ func packetCapture() {
 	// Open device
 	handle, err := pcap.OpenLive(device, snapshot_len, promiscuous, timeout)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 	defer handle.Close()
 
@@ -54,11 +55,11 @@ func packetCapture() {
 	}
 }
 
-func MACParser(m string) []byte {
-	bs := make([]byte, 6)
-	for i, v := range strings.Split(m, ":") {
-		sv, _ := strconv.ParseInt(v, 16, 64)
-		bs[i] = byte(sv)
+func init() {
+	var err error
+	targetMACAddress, err = net.ParseMAC(mac)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
-	return bs
 }
